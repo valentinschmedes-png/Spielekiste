@@ -1,0 +1,105 @@
+/* style.css */
+:root{
+  --bg:#ffffff;
+  --fg:#121212;
+  --muted:#666;
+  --primary:#1f6feb;
+  --primary-contrast:#fff;
+  --card:#f6f7f9;
+  --border:#e5e7eb;
+  --panel:#fafafa;
+  --accent:#0ea5e9;
+  --green:#bfe4b8;
+  --yellow:#f7f1b3;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;height:100%;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;}
+.app-header, .app-footer{
+  position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;
+}
+.app-footer{top:auto;bottom:0;border-top:1px solid var(--border);border-bottom:none;justify-content:center;}
+.icon-btn{border:1px solid var(--border);background:#fff;border-radius:.5rem;padding:.4rem .6rem;font-size:1.1rem;cursor:pointer;}
+.icon-btn:active{transform:scale(0.98);}
+.spacer{flex:1;}
+#app{padding:1rem 1rem 4rem;max-width:1100px;margin:0 auto;}
+
+.view{display:none;animation:fade .2s ease;}
+.view.active{display:block;}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+h1,h2,h3{margin:.4rem 0 0.6rem;}
+.subtitle{color:var(--muted);margin-top:0;}
+
+.card-list{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+.card{
+  display:flex;flex-direction:column;gap:.3rem;padding:1rem;border:1px solid var(--border);border-radius:.8rem;background:var(--card);
+  cursor:pointer;text-align:left;
+}
+.card-title{font-weight:600;}
+.card-sub{color:var(--muted);font-size:.9rem;}
+
+.recent-list.empty{opacity:.7}
+.recent-item{display:flex;justify-content:space-between;align-items:center;padding:.6rem .8rem;border:1px solid var(--border);border-radius:.6rem;margin:.4rem 0;background:var(--panel);}
+
+.form{display:flex;flex-direction:column;gap:.8rem;max-width:520px;}
+.row{display:flex;justify-content:space-between;gap:.8rem;align-items:center;}
+.row > span{flex:1}
+.row select, .row input{flex:1;border:1px solid var(--border);padding:.5rem;border-radius:.5rem;background:#fff;}
+
+.actions{display:flex;gap:.6rem;margin-top:1rem;}
+.primary{background:var(--primary);color:var(--primary-contrast);border:none;padding:.6rem 1rem;border-radius:.6rem;cursor:pointer;}
+.secondary{background:#fff;border:1px solid var(--border);padding:.6rem 1rem;border-radius:.6rem;cursor:pointer;}
+.primary:active,.secondary:active{transform:scale(0.98);}
+
+.toolbar{display:flex;gap:.6rem;margin-bottom:.8rem;}
+.board-container{display:flex;gap:1rem;align-items:flex-start;flex-wrap:wrap;}
+.side-panel{min-width:220px;flex:1;max-width:360px;border:1px solid var(--border);border-radius:.6rem;background:var(--panel);padding:.8rem;}
+.panel-section + .panel-section{margin-top:.8rem;}
+
+.move-list{max-height:260px;overflow:auto;padding-left:1.2rem;}
+.hint{color:var(--muted);}
+
+/* Chess board */
+.board.chess{display:grid;grid-template-columns:repeat(8, min(10vw, 56px));grid-auto-rows:min(10vw, 56px);border:2px solid var(--border);border-radius:.6rem;overflow:hidden;}
+.board.chess .sq{display:flex;align-items:center;justify-content:center;font-size:1.3rem;user-select:none;touch-action:manipulation;}
+.board.chess.classic .light{background:#f0f0f0;}
+.board.chess.classic .dark{background:#3c3c3c;color:#fff;}
+.board.chess.green .light{background:var(--green);}
+.board.chess.green .dark{background:var(--yellow);}
+.board.chess .sq.sel{outline:2px solid var(--accent);}
+
+/* Simple piece glyphs */
+.piece{font-size:1.5rem}
+
+/* Mühle */
+.mill-board{position:relative;width:min(90vw,420px);height:min(90vw,420px);border:2px solid var(--fg);border-radius:.4rem;background:#fff;}
+.mill-board .node{position:absolute;width:18px;height:18px;border-radius:50%;border:2px solid var(--fg);background:#fff;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;}
+.mill-board .node.active{background:var(--accent);border-color:var(--accent);}
+.mill-board .stone.w{background:#f1f5f9;border-color:#000;}
+.mill-board .stone.b{background:#111827;border-color:#111827;}
+/* Linien werden via SVG/Canvas gemalt; hier minimalistisch */
+
+/* Solitär */
+.solitaire-board{display:grid;grid-template-columns:repeat(7, min(12vw, 64px));gap:.4rem;min-height:60vh;}
+.card{position:relative}
+.playcard{width:min(12vw,64px);height:90px;border-radius:.4rem;border:1px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;}
+.playcard.back{background:#334155;color:#fff;}
+.playcol{min-height:100px;border:2px dashed var(--border);border-radius:.4rem;padding:.3rem;}
+
+/* Vier gewinnt */
+.c4-board{display:grid;grid-template-columns:repeat(7, min(10vw,52px));grid-auto-rows:min(10vw,52px);gap:.35rem;background:#0f172a;padding:.5rem;border-radius:.6rem;}
+.c4-cell{width:100%;height:100%;background:#e2e8f0;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.c4-cell.red{background:#ef4444;}
+.c4-cell.yellow{background:#facc15;}
+
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;}
+.modal.hidden{display:none;}
+.modal .modal-content{background:#fff;padding:1rem;border-radius:.6rem;max-width:720px;width:92vw;max-height:80vh;overflow:auto;border:1px solid var(--border);}
+
+/* Responsive tweaks */
+@media (min-width:900px){
+  .board.chess{grid-template-columns:repeat(8, 64px);grid-auto-rows:64px;}
+}

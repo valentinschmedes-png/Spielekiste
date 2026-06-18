@@ -1,0 +1,270 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Spielekiste</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <button id="backButton" class="icon-btn" aria-label="Zurück" title="Zurück">←</button>
+    <h1 id="appTitle">Spielekiste</h1>
+    <div class="spacer"></div>
+  </header>
+
+  <main id="app">
+    <!-- Hauptmenü -->
+    <section id="homeView" class="view active">
+      <h2>Hauptmenü</h2>
+      <p class="subtitle">Wähle ein Spiel:</p>
+      <div class="card-list">
+        <button class="card" data-view="chessSetup">
+          <div class="card-title">Schach</div>
+          <div class="card-sub">Mensch vs. Mensch oder gegen Computer</div>
+        </button>
+        <button class="card" data-view="millSetup">
+          <div class="card-title">Mühle</div>
+          <div class="card-sub">Neun-Menschen-Morris</div>
+        </button>
+        <button class="card" data-view="solitaireView">
+          <div class="card-title">Solitär (Klondike)</div>
+          <div class="card-sub">Einzelspieler</div>
+        </button>
+        <button class="card" data-view="connect4Setup">
+          <div class="card-title">Vier gewinnt</div>
+          <div class="card-sub">Mensch vs. Mensch oder gegen Computer</div>
+        </button>
+      </div>
+
+      <h3>Zuletzt gespielt</h3>
+      <div id="recentList" class="recent-list empty">
+        <p class="hint">Noch keine Einträge.</p>
+      </div>
+    </section>
+
+    <!-- Schach Setup -->
+    <section id="chessSetup" class="view">
+      <h2>Schach – Einstellungen</h2>
+      <div class="form">
+        <label class="row">
+          <span>Modus</span>
+          <select id="chessMode">
+            <option value="pvp">Mensch vs. Mensch</option>
+            <option value="pvb">Mensch vs. Bot</option>
+          </select>
+        </label>
+        <div id="chessBotRow" class="row">
+          <span>Schwierigkeit (Bot)</span>
+          <select id="chessDifficulty">
+            <option value="easy">Leicht</option>
+            <option value="medium">Mittel</option>
+            <option value="hard">Schwer</option>
+          </select>
+        </div>
+        <label class="row">
+          <span>Farbschema</span>
+          <select id="chessTheme">
+            <option value="classic">Schwarz/Weiß</option>
+            <option value="green">Hellgrün/Hellgelb</option>
+          </select>
+        </label>
+      </div>
+      <div class="actions">
+        <button id="startChess" class="primary">Spiel starten</button>
+        <button class="secondary" data-view="homeView">Zurück zum Hauptmenü</button>
+      </div>
+    </section>
+
+    <!-- Schach Spiel -->
+    <section id="chessView" class="view">
+      <div class="toolbar">
+        <button id="chessNew" class="secondary">Neu</button>
+        <button id="chessUndo" class="secondary">Zug zurück</button>
+        <button id="chessResign" class="secondary">Aufgeben</button>
+        <div class="spacer"></div>
+        <button class="secondary" data-view="homeView">Hauptmenü</button>
+      </div>
+      <div class="board-container">
+        <div id="chessBoard" class="board chess classic"></div>
+        <div class="side-panel">
+          <div class="panel-section">
+            <h3>Am Zug: <span id="chessTurnLabel">Weiß</span></h3>
+            <p id="chessStatus">Bereit.</p>
+          </div>
+          <div class="panel-section">
+            <h3>Züge</h3>
+            <ol id="chessMoves" class="move-list"></ol>
+          </div>
+          <div class="panel-section">
+            <button id="chessShowHistory" class="secondary">Spielverlauf anzeigen</button>
+          </div>
+        </div>
+      </div>
+      <div id="chessHistoryModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Spielverlauf</h3>
+          <div id="chessHistoryContent" class="history"></div>
+          <div class="actions">
+            <button id="chessHistoryClose" class="primary">Schließen</button>
+            <button class="secondary" data-view="homeView">Zum Hauptmenü</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mühle Setup -->
+    <section id="millSetup" class="view">
+      <h2>Mühle – Einstellungen</h2>
+      <div class="form">
+        <label class="row">
+          <span>Modus</span>
+          <select id="millMode">
+            <option value="pvp">Mensch vs. Mensch</option>
+            <option value="pvb">Mensch vs. Bot (einfach)</option>
+          </select>
+        </label>
+      </div>
+      <div class="actions">
+        <button id="startMill" class="primary">Spiel starten</button>
+        <button class="secondary" data-view="homeView">Zurück zum Hauptmenü</button>
+      </div>
+    </section>
+
+    <!-- Mühle Spiel -->
+    <section id="millView" class="view">
+      <div class="toolbar">
+        <button id="millNew" class="secondary">Neu</button>
+        <div class="spacer"></div>
+        <button class="secondary" data-view="homeView">Hauptmenü</button>
+      </div>
+      <div class="board-container">
+        <div id="millBoard" class="mill-board"></div>
+        <div class="side-panel">
+          <div class="panel-section">
+            <h3>Am Zug: <span id="millTurnLabel">Weiß</span></h3>
+            <p id="millStatus">Platzierungsphase.</p>
+          </div>
+          <div class="panel-section">
+            <h3>Züge</h3>
+            <ol id="millMoves" class="move-list"></ol>
+          </div>
+          <div class="panel-section">
+            <button id="millShowHistory" class="secondary">Spielverlauf anzeigen</button>
+          </div>
+        </div>
+      </div>
+      <div id="millHistoryModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Spielverlauf</h3>
+          <div id="millHistoryContent" class="history"></div>
+          <div class="actions">
+            <button id="millHistoryClose" class="primary">Schließen</button>
+            <button class="secondary" data-view="homeView">Zum Hauptmenü</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solitär -->
+    <section id="solitaireView" class="view">
+      <div class="toolbar">
+        <button id="solNew" class="secondary">Neu</button>
+        <div class="spacer"></div>
+        <button class="secondary" data-view="homeView">Hauptmenü</button>
+      </div>
+      <div class="board-container">
+        <div id="solitaireBoard" class="solitaire-board"></div>
+        <div class="side-panel">
+          <div class="panel-section">
+            <h3>Status</h3>
+            <p id="solitaireStatus">Ziehe Karten, um Stapel zu sortieren.</p>
+          </div>
+          <div class="panel-section">
+            <h3>Züge</h3>
+            <ol id="solitaireMoves" class="move-list"></ol>
+          </div>
+          <div class="panel-section">
+            <button id="solitaireShowHistory" class="secondary">Spielverlauf anzeigen</button>
+          </div>
+        </div>
+      </div>
+      <div id="solitaireHistoryModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Spielverlauf</h3>
+          <div id="solitaireHistoryContent" class="history"></div>
+          <div class="actions">
+            <button id="solitaireHistoryClose" class="primary">Schließen</button>
+            <button class="secondary" data-view="homeView">Zum Hauptmenü</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vier gewinnt Setup -->
+    <section id="connect4Setup" class="view">
+      <h2>Vier gewinnt – Einstellungen</h2>
+      <div class="form">
+        <label class="row">
+          <span>Modus</span>
+          <select id="connect4Mode">
+            <option value="pvp">Mensch vs. Mensch</option>
+            <option value="pvb">Mensch vs. Bot (einfach)</option>
+          </select>
+        </label>
+      </div>
+      <div class="actions">
+        <button id="startConnect4" class="primary">Spiel starten</button>
+        <button class="secondary" data-view="homeView">Zurück zum Hauptmenü</button>
+      </div>
+    </section>
+
+    <!-- Vier gewinnt Spiel -->
+    <section id="connect4View" class="view">
+      <div class="toolbar">
+        <button id="c4New" class="secondary">Neu</button>
+        <div class="spacer"></div>
+        <button class="secondary" data-view="homeView">Hauptmenü</button>
+      </div>
+      <div class="board-container">
+        <div id="connect4Board" class="c4-board"></div>
+        <div class="side-panel">
+          <div class="panel-section">
+            <h3>Am Zug: <span id="c4TurnLabel">Rot</span></h3>
+            <p id="c4Status">Wähle eine Spalte.</p>
+          </div>
+          <div class="panel-section">
+            <h3>Züge</h3>
+            <ol id="c4Moves" class="move-list"></ol>
+          </div>
+          <div class="panel-section">
+            <button id="c4ShowHistory" class="secondary">Spielverlauf anzeigen</button>
+          </div>
+        </div>
+      </div>
+      <div id="c4HistoryModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Spielverlauf</h3>
+          <div id="c4HistoryContent" class="history"></div>
+          <div class="actions">
+            <button id="c4HistoryClose" class="primary">Schließen</button>
+            <button class="secondary" data-view="homeView">Zum Hauptmenü</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <small>© Spielekiste</small>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="games/chess.js"></script>
+  <script src="games/mill.js"></script>
+  <script src="games/solitaire.js"></script>
+  <script src="games/connect4.js"></script>
+</body>
+</html>
